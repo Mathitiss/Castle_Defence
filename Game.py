@@ -1,18 +1,24 @@
 import pygame
 import sys
+from settings import Settings
+from enemy import Enemy
 
 class CastleDefence():
     def __init__(self):
         pygame.init()
+        self.settings = Settings()
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self.clock = pygame.time.Clock()    
 
-        self.screen = pygame.display.set_mode((1280, 820))
+        # castle = pygame.image.load('img/castle.png').convert_alpha()
 
         pygame.display.set_caption("Castle Defence")
         pygame.display.flip()
 
     def run_game(self):
         while True:
-            self.events()
+            self.events()   
+            self.clock.tick(60)
 
     def events(self):
         for event in pygame.event.get():
