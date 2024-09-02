@@ -1,6 +1,7 @@
 import pygame
 import sys
 from settings import Settings
+# from castle import Castle
 from enemy import Enemy
 
 class CastleDefence():
@@ -10,14 +11,15 @@ class CastleDefence():
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.clock = pygame.time.Clock()    
 
-        # castle = pygame.image.load('img/castle.png').convert_alpha()
-
         pygame.display.set_caption("Castle Defence")
-        pygame.display.flip()
 
+        self.enemy = Enemy(self)            # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
+        self.enemy = pygame.sprite.Group()  # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
+        
     def run_game(self):
         while True:
-            self.events()   
+            self.events()
+            self.update_screen()   
             self.clock.tick(60)
 
     def events(self):
@@ -31,7 +33,11 @@ class CastleDefence():
         if event.key == pygame.K_ESCAPE:
             sys.exit()
 
+    def update_screen(self):    # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
+        self.enemy.blitme()
+        self.enemy.draw(self.screen)
 
+        pygame.display.flip()
 
 if __name__ == "__main__":
     cd = CastleDefence()
