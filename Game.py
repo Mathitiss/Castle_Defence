@@ -13,13 +13,14 @@ class CastleDefence():
 
         pygame.display.set_caption("Castle Defence")
 
-        self.enemy = Enemy(self)            # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
-        self.enemy = pygame.sprite.Group()  # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
+        self.enemy = Enemy(self)              # Оставить под enemy    !!!
+        # self.enemy = pygame.sprite.Group()  # Оставить под enemy    !!!
         
     def run_game(self):
         while True:
             self.events()
-            self.update_screen()   
+            self.enemy_move()
+            self.update_screen()  
             self.clock.tick(60)
 
     def events(self):
@@ -33,9 +34,13 @@ class CastleDefence():
         if event.key == pygame.K_ESCAPE:
             sys.exit()
 
+    def enemy_move(self):
+        self.enemy.moving()        
+
     def update_screen(self):    # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
+        self.screen.fill('grey')
         self.enemy.blitme()
-        self.enemy.draw(self.screen)
+        # self.enemy.draw(self.screen)
 
         pygame.display.flip()
 

@@ -1,21 +1,21 @@
 import pygame
-from pygame.sprite import Sprite
+# from pygame.sprite import Sprite
 
-class Enemy(Sprite):
+class Enemy():
     def __init__(self, cd_game):
-        super().__init__()
         self.screen = cd_game.screen
+        self.screen_rect = cd_game.screen.get_rect()
+
         self.image = pygame.image.load('img//tank.bmp')
         self.rect = self.image.get_rect()
+        self.rect.midbottom = self.screen_rect.midbottom
 
-        self.rect.x = self.rect.width
-        self.rect.y = self.rect.height
+        self.x = int(self.rect.x)
+        self.y = int(self.rect.y)
 
-'''
-class Enemy(pygame.sprite.Sprite):
-    def __init__(self, pos, image):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.get.center = pos
-'''
+    def moving(self):
+        self.rect.y -= 1
+        # self.rect.y = self.y
+
+    def blitme(self):
+        self.screen.blit(self.image, self.rect)
