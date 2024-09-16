@@ -1,5 +1,4 @@
 import pygame
-# from pygame.sprite import Sprite
 
 class Enemy():
     def __init__(self, cd_game):
@@ -15,7 +14,6 @@ class Enemy():
 
     def moving(self):
         self.rect.y -= 1
-        # self.rect.y = self.y
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
