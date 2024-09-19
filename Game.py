@@ -45,7 +45,6 @@ class CastleDefence():
     def update_screen(self):    # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
         self.screen.fill('grey')
         self.enemy.blitme()
-
         self.draw.lines(self.screen, "red", False, self.settings.waypoints)
 
         pygame.display.flip()
