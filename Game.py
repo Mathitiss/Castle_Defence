@@ -13,8 +13,8 @@ class CastleDefence():
 
         pygame.display.set_caption("Castle Defence")
 
-        self.enemy = Enemy(self)                # Оставить под enemy    !!!
-        # self.enemy = pygame.sprite.Group()    # Оставить под enemy    !!!
+        self.enemy = Enemy(self)
+        # self.enemy = pygame.sprite.Group()  # Group, add, kill, remove
         self.draw = pygame.draw
         
     def run_game(self):
@@ -37,15 +37,15 @@ class CastleDefence():
             sys.exit()
 
     def enemy_move(self):
-        self.enemy.moving()       
+        self.enemy.moving()     
 
     def draw_lines(self):
-        self.draw.lines(self.screen, "red", False, self.settings.waypoints)
+        self.draw.lines(self.screen, "red", False, self.enemy.waypoints)
 
     def update_screen(self):    # Скорее всего под enemy нужно сделать цикл, а это оставить под castle !!!
         self.screen.fill('grey')
         self.enemy.blitme()
-        self.draw.lines(self.screen, "red", False, self.settings.waypoints)
+        self.draw.lines(self.screen, "red", False, self.enemy.waypoints)
 
         pygame.display.flip()
 
