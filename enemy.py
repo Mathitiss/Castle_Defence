@@ -1,8 +1,11 @@
+from typing import Any
 import pygame
+from pygame.sprite import Sprite
 from pygame.math import Vector2
 
-class Enemy():
+class Enemy(Sprite):
     def __init__(self, cd_game):
+        super().__init__()
         self.screen = cd_game.screen
         self.screen_rect = cd_game.screen.get_rect()
 
@@ -35,5 +38,8 @@ class Enemy():
 
         self.rect.center = self.pos
 
-    def blitme(self):
-        self.screen.blit(self.image, self.rect)
+    def update(self):
+        self.rect.x = self.x
+
+    # def blitme(self):
+    #     self.screen.blit(self.image, self.rect)
