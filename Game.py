@@ -23,7 +23,6 @@ class CastleDefence():
     def run_game(self):
         while True:
             self.events()
-            self.create_enemy()
             self.enemy_move()
             self.enemy_update()
             self.draw_lines()
@@ -46,7 +45,7 @@ class CastleDefence():
         self.enemy_group.add(self.enemy)
 
     def enemy_move(self):
-        self.enemy.moving()     
+        self.enemy.moving()
 
     def enemy_update(self):
         self.enemy_group.update()
