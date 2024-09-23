@@ -1,15 +1,17 @@
-from typing import Any
 import pygame
 from pygame.sprite import Sprite
 from pygame.math import Vector2
+import math
 
 class Enemy(Sprite):
     def __init__(self, cd_game):
         super().__init__()
         self.screen = cd_game.screen
         self.screen_rect = cd_game.screen.get_rect()
+        self.angle = 90
 
         self.image = pygame.image.load('img//tank.bmp')
+        self.trans_image = pygame.transform.rotate(self.image, self.angle)
         self.rect = self.image.get_rect()
 
         self.waypoints = [(100, 100), (400, 200), (400, 100), (200, 300)]
@@ -36,6 +38,14 @@ class Enemy(Sprite):
                 self.pos += self.movement.normalize() * self.distance
             self.target_waypoint += 1
 
+        # self.rect.center = self.pos
+
+    def rotation(self):
+        self.distance = self.target - self.pos
+        self.angle = math.degrees(math.atan2(-self.distance[1], self.distance[0]))
+
+        self.image = pygame.transform.rotate(self.trans_image, self.angle)
+        self.rect = self.image.get_rect()
         self.rect.center = self.pos
 
     # def update(self):
