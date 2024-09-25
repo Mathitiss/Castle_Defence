@@ -38,8 +38,6 @@ class Enemy(Sprite):
                 self.pos += self.movement.normalize() * self.distance
             self.target_waypoint += 1
 
-        # self.rect.center = self.pos
-
     def rotation(self):
         self.distance = self.target - self.pos
         self.angle = math.degrees(math.atan2(-self.distance[1], self.distance[0]))
@@ -47,6 +45,3 @@ class Enemy(Sprite):
         self.image = pygame.transform.rotate(self.trans_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
-
-    # def update(self):
-    #     self.rect.x = self.x

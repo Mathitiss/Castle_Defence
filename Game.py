@@ -3,17 +3,20 @@ import sys
 from settings import Settings
 # from castle import Castle      НА БУДУЩЕЕ (castle под ship)
 from enemy import Enemy
+from map import Level
 
 class CastleDefence():
     def __init__(self):
         pygame.init()
 
         self.settings = Settings()
+        self.map_image = pygame.image.load('img//level.png')
+        self.map = Level(self.map_image)
+        # self.castle = Castle(self)    НА БУДУЩЕЕ (castle под ship)
+
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.clock = pygame.time.Clock()    
         pygame.display.set_caption("Castle Defence")
-
-        # self.castle = Castle(self)    НА БУДУЩЕЕ (castle под ship)
 
         self.enemy_group = pygame.sprite.Group()
         self.create_enemy()
@@ -57,10 +60,11 @@ class CastleDefence():
     def update_screen(self):
         self.screen.fill('grey')
         # self.castle.blitme()    НА БУДУЩЕЕ (castle под ship)
+        self.map.draw(self.screen)
         self.draw.lines(self.screen, "red", False, self.enemy.waypoints)
 
         self.enemy_group.draw(self.screen)
-
+        
         pygame.display.flip()
 
 if __name__ == "__main__":
