@@ -4,6 +4,7 @@ from settings import Settings
 # from castle import Castle      НА БУДУЩЕЕ (castle под ship)
 from enemy import Enemy
 from map import Level
+from turret import Turret
 
 class CastleDefence():
     def __init__(self):
@@ -20,6 +21,8 @@ class CastleDefence():
 
         self.enemy_group = pygame.sprite.Group()
         self.create_enemy()
+        self.cursor_turret = pygame.image.load('img//turret.png')
+        self.turret_group = pygame.sprite.Group()
 
         self.draw = pygame.draw
         
@@ -28,7 +31,6 @@ class CastleDefence():
             self.events()
             self.enemy_move()
             self.enemy_update()
-            self.draw_lines()
             self.update_screen()  
             self.clock.tick(60)
 
@@ -38,6 +40,11 @@ class CastleDefence():
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self.keydown_events(event)
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                self.mouse_pos = pygame.mouse.get_pos()
+                self.turret = Turret(self.cursor_turret)
+                self.turret_group.add(self.turret)
 
     def keydown_events(self, event):
         if event.key == pygame.K_ESCAPE:
@@ -54,16 +61,13 @@ class CastleDefence():
     def enemy_update(self):
         self.enemy_group.update()
 
-    def draw_lines(self):
-        self.draw.lines(self.screen, "red", False, self.enemy.waypoints)
-
     def update_screen(self):
         self.screen.fill('grey')
         # self.castle.blitme()    НА БУДУЩЕЕ (castle под ship)
         self.map.draw(self.screen)
-        self.draw.lines(self.screen, "red", False, self.enemy.waypoints)
 
         self.enemy_group.draw(self.screen)
+        self.turret_group.draw(self.screen)
         
         pygame.display.flip()
 

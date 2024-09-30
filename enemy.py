@@ -14,7 +14,9 @@ class Enemy(Sprite):
         self.trans_image = pygame.transform.rotate(self.image, self.angle)
         self.rect = self.image.get_rect()
 
-        self.waypoints = [(100, 100), (400, 200), (400, 100), (200, 300)]
+        self.waypoints = [(0, 75), (300, 75), (300, 225), (485, 225), (485, 75),
+                          (695, 75), (695, 390), (500, 390), (500, 710), (708, 710),
+                          (708, 565), (900, 565), (900, 710), (1200, 710)]
         self.pos = Vector2(self.waypoints[0])
         self.target_waypoint = 1
         self.speed = 2

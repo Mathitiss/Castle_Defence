@@ -1,6 +1,6 @@
 import pygame
 
-class Level:
+class Level():
     def __init__(self, map_image):
         self.image = map_image
 
