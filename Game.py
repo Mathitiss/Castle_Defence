@@ -21,8 +21,9 @@ class CastleDefence():
 
         self.enemy_group = pygame.sprite.Group()
         self.create_enemy()
-        self.cursor_turret = pygame.image.load('img//turret.png')
+        self.cursor_turret = pygame.image.load('img//turret.png')  
         self.turret_group = pygame.sprite.Group()
+        # self.create_turret()
 
         self.draw = pygame.draw
         
@@ -43,8 +44,9 @@ class CastleDefence():
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 self.mouse_pos = pygame.mouse.get_pos()
-                self.turret = Turret(self.cursor_turret)
-                self.turret_group.add(self.turret)
+                if self.mouse_pos[0] < self.settings.screen_width and self.mouse_pos[1] < self.settings.screen_height:
+                    self.create_turret(self.mouse_pos)
+
 
     def keydown_events(self, event):
         if event.key == pygame.K_ESCAPE:
@@ -53,6 +55,12 @@ class CastleDefence():
     def create_enemy(self):
         self.enemy = Enemy(self)
         self.enemy_group.add(self.enemy)
+
+    def create_turret(self, mouse_pos):
+        self.mouse_tile_x = mouse_pos[0] // self.settings.TILE_SIZE_X
+        self.mouse_tile_y = mouse_pos[1] // self.settings.TILE_SIZE_Y
+        self.turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
+        self.turret_group.add(self.turret)
 
     def enemy_move(self):
         self.enemy.moving()
