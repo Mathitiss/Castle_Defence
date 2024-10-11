@@ -59,8 +59,16 @@ class CastleDefence():
     def create_turret(self, mouse_pos):
         self.mouse_tile_x = mouse_pos[0] // self.settings.TILE_SIZE_X
         self.mouse_tile_y = mouse_pos[1] // self.settings.TILE_SIZE_Y
-        self.turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
-        self.turret_group.add(self.turret)
+
+        # for i in self.settings.tile_map:
+        #     if self.settings.tile_map[i] == 1:
+        #         self.turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
+        #         self.turret_group.add(self.turret)
+
+        self.mouse_num = (self.mouse_tile_y * self.settings.cols) + self.mouse_tile_x 
+        if self.settings.tile_map[self.mouse_num] == 1:
+            self.turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
+            self.turret_group.add(self.turret)
 
     def enemy_move(self):
         self.enemy.moving()
