@@ -9,8 +9,8 @@ class Turret(pygame.sprite.Sprite):
         self.tile_x = tile_x
         self.tile_y = tile_y
 
-        self.x = (self.tile_x + 0.5) * self.settings.TILE_SIZE_X
-        self.y = (self.tile_y + 0.5) * self.settings.TILE_SIZE_Y
+        self.x = (self.tile_x + 0.5) * self.settings.tile_size_x
+        self.y = (self.tile_y + 0.5) * self.settings.tile_size_y
 
         self.image = image
         self.rect = self.image.get_rect()

@@ -5,6 +5,7 @@ from settings import Settings
 from enemy import Enemy
 from map import Level
 from turret import Turret
+from side_panel import Button
 
 class CastleDefence():
     def __init__(self):
@@ -15,7 +16,7 @@ class CastleDefence():
         self.map = Level(self.map_image)
         # self.castle = Castle(self)    НА БУДУЩЕЕ (castle под ship)
 
-        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        self.screen = pygame.display.set_mode((self.settings.screen_width + self.settings.side_panel, self.settings.screen_height))
         self.clock = pygame.time.Clock()    
         pygame.display.set_caption("Castle Defence")
 
@@ -23,7 +24,12 @@ class CastleDefence():
         self.create_enemy()
         self.cursor_turret = pygame.image.load('img//turret.png')  
         self.turret_group = pygame.sprite.Group()
-        # self.create_turret()
+
+        self.buy_img = pygame.image.load('img//buy_btn.png') 
+        self.cancel_img = pygame.image.load('img//cancel_btn.png')
+
+        self.buy_button = Button(self.settings.screen_width + 30, 120, self.buy_img)
+        self.cancel_button = Button(self.settings.screen_width + 50, 180, self.cancel_img)
 
         self.draw = pygame.draw
         
@@ -47,7 +53,6 @@ class CastleDefence():
                 if self.mouse_pos[0] < self.settings.screen_width and self.mouse_pos[1] < self.settings.screen_height:
                     self.create_turret(self.mouse_pos)
 
-
     def keydown_events(self, event):
         if event.key == pygame.K_ESCAPE:
             sys.exit()
@@ -57,18 +62,18 @@ class CastleDefence():
         self.enemy_group.add(self.enemy)
 
     def create_turret(self, mouse_pos):
-        self.mouse_tile_x = mouse_pos[0] // self.settings.TILE_SIZE_X
-        self.mouse_tile_y = mouse_pos[1] // self.settings.TILE_SIZE_Y
-
-        # for i in self.settings.tile_map:
-        #     if self.settings.tile_map[i] == 1:
-        #         self.turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
-        #         self.turret_group.add(self.turret)
+        self.mouse_tile_x = mouse_pos[0] // self.settings.tile_size_x
+        self.mouse_tile_y = mouse_pos[1] // self.settings.tile_size_y
 
         self.mouse_num = (self.mouse_tile_y * self.settings.cols) + self.mouse_tile_x 
         if self.settings.tile_map[self.mouse_num] == 1:
-            self.turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
-            self.turret_group.add(self.turret)
+            self.free_space = True
+            for turret in self.turret_group:
+                if (self.mouse_tile_x, self.mouse_tile_y) == (turret.tile_x, turret.tile_y):
+                    self.free_space = False
+            if self.free_space:
+                self.new_turret = Turret(self.cursor_turret, self.mouse_tile_x, self.mouse_tile_y)
+                self.turret_group.add(self.new_turret)
 
     def enemy_move(self):
         self.enemy.moving()
@@ -84,7 +89,10 @@ class CastleDefence():
 
         self.enemy_group.draw(self.screen)
         self.turret_group.draw(self.screen)
-        
+
+        self.buy_button.draw()
+        self.cancel_button.draw()
+
         pygame.display.flip()
 
 if __name__ == "__main__":
