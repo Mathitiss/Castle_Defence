@@ -13,7 +13,8 @@ class CastleDefence():
 
         self.settings = Settings()
         self.map_image = pygame.image.load('img//level.png')
-        self.map = Level(self.map_image)
+        self.side_img = pygame.image.load('img//side_bar3.png') 
+        self.map = Level(self.map_image, self.side_img)
         # self.castle = Castle(self)    НА БУДУЩЕЕ (castle под ship)
 
         self.screen = pygame.display.set_mode((self.settings.screen_width + self.settings.side_panel, self.settings.screen_height))
@@ -28,8 +29,8 @@ class CastleDefence():
         self.buy_img = pygame.image.load('img//buy_btn.png') 
         self.cancel_img = pygame.image.load('img//cancel_btn.png')
 
-        self.buy_button = Button(self.settings.screen_width + 30, 120, self.buy_img)
-        self.cancel_button = Button(self.settings.screen_width + 50, 180, self.cancel_img)
+        self.buy_button = Button(self.settings.screen_width + 80, 120, self.buy_img)
+        self.cancel_button = Button(self.settings.screen_width + 100, 210, self.cancel_img)
 
         self.draw = pygame.draw
         
@@ -90,8 +91,8 @@ class CastleDefence():
         self.enemy_group.draw(self.screen)
         self.turret_group.draw(self.screen)
 
-        self.buy_button.draw()
-        self.cancel_button.draw()
+        self.buy_button.draw(self.screen)
+        self.cancel_button.draw(self.screen)
 
         pygame.display.flip()
 
