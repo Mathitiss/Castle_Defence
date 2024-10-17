@@ -1,7 +1,6 @@
 import pygame
 import sys
 from settings import Settings
-# from castle import Castle      НА БУДУЩЕЕ (castle под ship)
 from enemy import Enemy
 from map import Level
 from turret import Turret
@@ -15,7 +14,6 @@ class CastleDefence():
         self.map_image = pygame.image.load('img//level.png')
         self.side_img = pygame.image.load('img//side_bar3.png') 
         self.map = Level(self.map_image, self.side_img)
-        # self.castle = Castle(self)    НА БУДУЩЕЕ (castle под ship)
 
         self.screen = pygame.display.set_mode((self.settings.screen_width + self.settings.side_panel, self.settings.screen_height))
         self.clock = pygame.time.Clock()    
@@ -29,8 +27,10 @@ class CastleDefence():
         self.buy_img = pygame.image.load('img//buy_btn.png') 
         self.cancel_img = pygame.image.load('img//cancel_btn.png')
 
-        self.buy_button = Button(self.settings.screen_width + 80, 120, self.buy_img)
-        self.cancel_button = Button(self.settings.screen_width + 100, 210, self.cancel_img)
+        self.buy_button = Button(self.settings.screen_width + 80, 120, self.buy_img, True)
+        self.cancel_button = Button(self.settings.screen_width + 100, 210, self.cancel_img, True)
+
+        self.place_turret = False
 
         self.draw = pygame.draw
         
@@ -52,7 +52,8 @@ class CastleDefence():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 self.mouse_pos = pygame.mouse.get_pos()
                 if self.mouse_pos[0] < self.settings.screen_width and self.mouse_pos[1] < self.settings.screen_height:
-                    self.create_turret(self.mouse_pos)
+                    if self.place_turret:
+                        self.create_turret(self.mouse_pos)
 
     def keydown_events(self, event):
         if event.key == pygame.K_ESCAPE:
@@ -85,14 +86,21 @@ class CastleDefence():
 
     def update_screen(self):
         self.screen.fill('grey')
-        # self.castle.blitme()    НА БУДУЩЕЕ (castle под ship)
         self.map.draw(self.screen)
 
         self.enemy_group.draw(self.screen)
         self.turret_group.draw(self.screen)
 
-        self.buy_button.draw(self.screen)
-        self.cancel_button.draw(self.screen)
+        if self.buy_button.draw(self.screen):
+            self.place_turret = True
+        if self.place_turret:
+            self.cursor_rect = self.cursor_turret.get_rect()
+            self.cursor_pos = pygame.mouse.get_pos()
+            self.cursor_rect.center = self.cursor_pos
+            if self.cursor_pos[0] <= self.settings.screen_width:
+                self.screen.blit(self.cursor_turret, self.cursor_rect)
+            if self.cancel_button.draw(self.screen):
+                self.place_turret = False
 
         pygame.display.flip()
 
